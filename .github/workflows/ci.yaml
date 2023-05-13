@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  push:
+
+jobs:
+  tests:
+    name: Python
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -U pip poetry
+          poetry config virtualenvs.create false
+          poetry install
+
+      - name: Run tests
+        run: make test
